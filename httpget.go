@@ -11,9 +11,9 @@ import (
 
 
 var (
-    valuelinkurl = "http://47.92.255.245/valuelink.pdf"
-    md5strsrc = "0b7d0d8c2b0109df9e5d0ba07b1028a3"
-    vlfile = "vl.pdf"
+    valuelinkurl = "https://avatars2.githubusercontent.com/u/5842099?s=400&u=674054525da4c81b7add2b68cf7544e73da9b936&v=4"
+    md5strsrc = "c6958428d2c110ac2a863e1486b4844c"
+    vlfile = "pig.jpg"
 )
 
 
