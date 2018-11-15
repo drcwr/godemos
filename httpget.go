@@ -7,6 +7,7 @@ import (
     "os"
     "crypto/md5"
     "encoding/hex"
+    "time"
 )
 
 
@@ -24,7 +25,11 @@ func main() {
 }
 
 func checkMd5(url , infile , orgmd5 string){
-    res,err := http.Get(url)
+    c := &http.Client {
+        Timeout:300*time.Second,
+    }
+    res,err:=c.Get(url)
+    //res, err := http.Get(url)
     if err != nil {
         fmt.Println("http get error",err.Error(),url)
     }
