@@ -62,3 +62,32 @@ func forloop() {
         
     }
 }
+
+
+/*
+
+	"runtime/pprof"
+	"os/signal"
+	"syscall"
+
+
+
+	f,err := os.Create("cpuprofile")
+	if err != nil {
+		fmt.Println("openfile error")
+	}
+	pprof.StartCPUProfile(f)
+
+	signalChan := make(chan os.Signal, 1)
+    // signal.Notify(signalChan, os.Interrupt)
+    signal.Notify(signalChan, syscall.SIGINT, syscall.SIGTERM)
+    go func() {
+        for _ = range signalChan {
+            fmt.Println("\n收到终端信号，停止服务... \n")
+            pprof.StopCPUProfile()
+            os.Exit(0)
+        }
+    }()
+
+
+*/
