@@ -1,0 +1,8 @@
+protoc -I ./ --go_out=plugins=micro,service_name=go.micro.srv.merchant:. ./merchant.proto
+for f in `ls *.pb.go`;do 
+    for i in `grep json.*omitempty $f -o|grep -e "[A-Z][A-Za-z]*" -o`;do 
+        k=$(echo $i|sed "s/^[A-Z]\+/\L&/g"|sed  's/[A-Z][A-Za-z]/_&/g'|sed "s/[A-Z]/\L&/g");
+        sed -i "s/json:\"$i,omitempty\"/json:\"$k,omitempty\" form:\"$k\"/g" $f;
+    done;
+done
+ls *.pb.go | xargs -n1 -IX bash -c 'sed s/,omitempty// X > X.tmp && mv X{.tmp,}'
