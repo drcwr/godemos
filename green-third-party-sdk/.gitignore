@@ -1,0 +1,6 @@
+# external packages folder
+vendor/
+.DS_Store
+
+.idea
+*.iml
