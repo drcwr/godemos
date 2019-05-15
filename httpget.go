@@ -22,6 +22,22 @@ func main() {
     //md5strsum := hex.EncodeToString(md5f.Sum(vlfile)
     checkMd5(valuelinkurl,vlfile,md5strsrc)
 
+      str := "something"
+  str2 := "nanalihai"
+  buf := bytes.NewBufferString(str)
+  buf.Write([]byte(str2))
+  fmt.Println(buf.String())   //输出拼接两个字符串的结果
+  
+  h := md5.New()
+  h.Write([]byte(buf.String())) // 需要加密的字符串为buf.String()
+  fmt.Printf("%s\n", hex.EncodeToString(h.Sum(nil))) // 输出加密结果
+/*
+--------------------- 
+作者：娜_91 
+来源：CSDN 
+原文：https://blog.csdn.net/ssd7sql/article/details/52821926 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+*/
 }
 
 func checkMd5(url , infile , orgmd5 string){
