@@ -134,16 +134,7 @@ func main(){
 	}
 
 	err4 := err2
-	if err4 == nil {
-		if err4 == err {
-			if err == nil {
-				fmt.Printf("4========= err == nil, err:%#v, err2:%#v,nil:%#v\n",err,err2,nil)
-			} else {
-				fmt.Printf("4========= err != nil, err:%#v, err2:%#v,nil:%#v\n",err,err2,nil)
-			}
-		}
-	}
-}
+@  }
 
 func (t *T) Error() string {
 	fmt.Printf("T Error\n")

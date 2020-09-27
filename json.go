@@ -20,7 +20,7 @@ func main() {
     a := "啊啊啊"
     var ctm0 CompanyTrademark
     ctm0.RType = 1
-    ctm0.No = nil
+    ctm0.No = "haha"
     ctm0.Image = "imageimage"
     var ctm CompanyTrademark
     var data []byte
