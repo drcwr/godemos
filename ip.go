@@ -8,6 +8,8 @@ import (
 
 func main() {
 	instr := "a"
+	iparr := [4]int{}
+	var err error
 
 	fmt.Scan(&instr)
 	if find := strings.Contains(instr, "."); find {
@@ -16,32 +18,16 @@ func main() {
 		if len(arr) == 4 {
 			// fmt.Printf("ip arr %#v,len=%d\n", arr, len(arr))
 
-			ip0, err := getipnum(arr[0])
-			if err != nil {
-				fmt.Println("not ip", arr)
-				return
-			}
-
-			ip1, err := getipnum(arr[1])
-			if err != nil {
-				fmt.Println("not ip", arr)
-				return
-			}
-
-			ip2, err := getipnum(arr[2])
-			if err != nil {
-				fmt.Println("not ip", arr)
-				return
-			}
-
-			ip3, err := getipnum(arr[3])
-			if err != nil {
-				fmt.Println("not ip", arr)
-				return
+			for index, val := range arr {
+				iparr[index], err = getipnum(val)
+				if err != nil {
+					fmt.Println("not ip", arr)
+					return
+				}
 			}
 
 			// fmt.Printf("ip = %d %d %d %d\n", ip0, ip1, ip2, ip3)
-			intip := ip0<<24 + ip1<<16 + ip2<<8 + ip3
+			intip := iparr[0]<<24 + iparr[1]<<16 + iparr[2]<<8 + iparr[3]
 			fmt.Printf("%d\n", intip)
 		} else {
 			fmt.Printf("not ip arr %#v,len=%d\n", arr, len(arr))

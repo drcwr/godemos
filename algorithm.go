@@ -10,12 +10,18 @@ algorithm.go demo
 
 */
 
+type TreeNode struct {
+	Value int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
 func main() {
 	var data = []int{1, 5, 7, 8, 9, 3, 10, 4, 6, 2, 11}
 
 	initLog()
 
-	log.Println("befor", data)
+	log.Println("org", data)
 	// bobo(data)
 	quicksort(data)
 	log.Println("after", data)
@@ -33,7 +39,8 @@ func quicksort(data []int) {
 	quick(data, 0, len(data)-1)
 }
 
-func quick(data []int, left, right int) {
+func qui7
+ck(data []int, left, right int) {
 	if left >= right {
 		return
 	}
