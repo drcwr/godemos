@@ -16,6 +16,8 @@ func main() {
 		log.Println("ch IsOpening 1")
 	}
 
+	go forselect(ch)
+
 	if IsOpening(ch) {
 		log.Println("ch IsOpening 1")
 	}
@@ -63,6 +65,17 @@ func IsClosedSelect(ch <-chan interface{}) bool {
 	}
 
 	return false
+}
+
+func forselect(ch <-chan interface{}) {
+	for {
+		isClosed := IsClosedSelect(ch)
+		if isClosed {
+			log.Println("isClosed return true")
+		} else {
+			log.Println("isClosed return false")
+		}
+	}
 }
 
 func initLog() {
