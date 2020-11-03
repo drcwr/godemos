@@ -1,15 +1,15 @@
 package main
 
 import (
-    "fmt"
+	"fmt"
 )
 
-
-
 func main() {
-    var itest int32 = 1
+	var y int32 = 2
 
-    itest += 1
+	for y <= 8 {
+		fmt.Println(y)
+		y = y + y
+	}
 
-    fmt.Println(itest)
 }

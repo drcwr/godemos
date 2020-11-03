@@ -36,3 +36,9 @@ func noinput() {
 	}
 	wg.Wait()
 }
+
+func mutextest() {
+	var m *sync.Mutex
+	m.Lock()
+	m.Unlock()
+}
