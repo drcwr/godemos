@@ -57,17 +57,18 @@ func IsOpening(cha <-chan int) bool {
 	return isOpening
 }
 
-func IsClosedSelect(ch <-chan interface{}) bool {
+func IsClosedSelect(ch <-chan int) bool {
 	select {
 	case <-ch:
 		return true
-	default:
+		// default:
 	}
 
 	return false
 }
 
-func forselect(ch <-chan interface{}) {
+func forselect(ch <-chan int) {
+	var retry = 0
 	for {
 		isClosed := IsClosedSelect(ch)
 		if isClosed {
@@ -75,6 +76,11 @@ func forselect(ch <-chan interface{}) {
 		} else {
 			log.Println("isClosed return false")
 		}
+		if retry == 4 {
+			log.Println("isClosed retry= ", retry, " end")
+			break
+		}
+		retry++
 	}
 }
 
