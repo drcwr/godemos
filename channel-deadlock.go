@@ -12,36 +12,20 @@ func main() {
 	ch <- 1
 	ch <- 2
 	ch <- 3
-	if IsOpening(ch) {
-		log.Println("ch IsOpening 1")
-	}
 
-	go forselect(ch)
-
-	if IsOpening(ch) {
-		log.Println("ch IsOpening 1")
-	}
-
+	// go forselect(ch)
 	close(ch)
-	// time.Sleep(4 * time.Second)
+
 	for j := 0; j < 10; j++ {
 		if IsOpening(ch) {
-			log.Println("ch IsOpening 2  ", j, "\n")
+			log.Println("ch IsOpening j  ", j, "\n")
 		} else {
+			log.Println("ch IsClosed j  ", j, "\n")
 			break
 		}
 	}
 
-	// for j := 0; j < 10; j++ {
-	// 	i, isOpening := <-ch
-	// 	log.Println("j,i", j, i)
-	// 	if isOpening {
-	// 		// log.Println("main IsOpening\n")
-	// 	} else {
-	// 		log.Println("main Isclosed\n")
-	// 		break
-	// 	}
-	// }
+	// close(ch)
 
 	IsclosedTicker(ch)
 }
@@ -55,16 +39,6 @@ func IsOpening(cha <-chan int) bool {
 		log.Println("IsOpening return false")
 	}
 	return isOpening
-}
-
-func IsClosedSelect(ch <-chan int) bool {
-	select {
-	case <-ch:
-		return true
-		// default:
-	}
-
-	return false
 }
 
 func checkChannelStatus(ch <-chan int) bool {
@@ -82,7 +56,6 @@ func checkChannelStatus(ch <-chan int) bool {
 func forselect(ch <-chan int) {
 	var retry = 0
 	for {
-		// isClosed := IsClosedSelect(ch)
 		isClosed := checkChannelStatus(ch)
 		if isClosed {
 			log.Println("isClosed return true")
@@ -121,7 +94,7 @@ LOOP:
 		case <-ticker.C:
 			log.Println("IsclosedTicker ticker loop")
 			if retry == 4 {
-				close(ch)
+				// close(ch)
 				break LOOP
 			}
 			retry++
