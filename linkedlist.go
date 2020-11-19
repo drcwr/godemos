@@ -153,3 +153,23 @@ func (l *List) ShowList() {
 		fmt.Printf("linkedlist empty\n")
 	}
 }
+
+func reverseList(l List) List {
+	if l.headNode == nil {
+		return l
+	}
+
+	cur := l.headNode
+	var next = *Node
+
+	for {
+		pre:= cur.Next
+		cur.Next = next
+		next = cur
+		cur = pre
+		if cur.Next == nil {
+			break
+		}
+	}
+
+}

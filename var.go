@@ -12,7 +12,13 @@ type Pp struct {
 }
 
 func main() {
-	ptest()
+	newtest()
+}
+
+func newtest() {
+	var intp *int = new(int)
+	var intsp = new([]int)
+	log.Printf("newtest %p,%v,%p\n", intp, *intp, intsp)
 }
 
 func ptest() {
