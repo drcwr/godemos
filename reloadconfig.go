@@ -39,6 +39,7 @@ func main() {
 	log.Println("main reloadconfig")
 	// NewConfig("test.cfg")
 	InitConf("test.cfg")
+	run()
 	time.Sleep(1 * time.Second)
 }
 
@@ -47,6 +48,19 @@ func NewConfig(file string) (conf *Config, err error) {
 		filename: file,
 		data:     make(map[string]string, 1024),
 	}
+
+	f, err := os.Open(conf.filename)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+
+	fileInfo, err := f.Stat()
+	if err != nil {
+		return
+	}
+
+	conf.lastModefyTime = fileInfo.ModTime().Unix()
 
 	log.Printf("NewConfig,conf:%#v\n", conf)
 
@@ -151,8 +165,8 @@ func (c *Config) GetStringDefault(key, defaultValue string) (value string, err e
 }
 
 func (c *Config) reload() {
-	log.Printf("Config reload\n")
-	ticker := time.NewTicker(time.Second * 5)
+	log.Printf("Config reload...\n")
+	ticker := time.NewTicker(time.Second * 1)
 
 	for _ = range ticker.C {
 		func() {
@@ -210,4 +224,14 @@ func InitConf(filename string) {
 	_ = err
 	log.Printf("InitConf conf=%#v\n", conf)
 	conf.AddObserver(appConfMgr)
+	appConfMgr.CallBack(conf)
+
+}
+
+func run() {
+	for {
+		appConf := appConfMgr.config.Load().(*AppConf)
+		log.Printf("run appConf=%#v\n", appConf)
+		time.Sleep(1 * time.Second)
+	}
 }
