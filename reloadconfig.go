@@ -12,16 +12,24 @@ import (
 	"time"
 )
 
-type Config struct {
-	filename       string            // 配置文件名
-	data           map[string]string // kv 配置
-	lastModefyTime int64             // 上一次更新时间
-	rwLock         sync.RWMutex      // 读写互斥锁
-	notifyList     []Notifyer        // 观察者模式
+type ConfigBase struct {
+	filename string            // 配置文件名
+	data     map[string]string // kv 配置
+
+}
+type Reload struct {
+	lastModefyTime int64        // 上一次更新时间
+	rwLock         sync.RWMutex // 读写互斥锁
+	notifyList     []Notifyer   // 观察者模式
+}
+
+type ConfigReload struct {
+	ConfigBase
+	Reload
 }
 
 type Notifyer interface {
-	CallBack(*Config)
+	CallBack(*ConfigReload)
 }
 
 type AppConf struct {
@@ -43,11 +51,10 @@ func main() {
 	time.Sleep(1 * time.Second)
 }
 
-func NewConfig(file string) (conf *Config, err error) {
-	conf = &Config{
-		filename: file,
-		data:     make(map[string]string, 1024),
-	}
+func NewConfig(file string) (conf *ConfigReload, err error) {
+	conf = &ConfigReload{}
+	conf.filename = file
+	conf.data = make(map[string]string, 1024)
 
 	f, err := os.Open(conf.filename)
 	if err != nil {
@@ -80,7 +87,7 @@ func NewConfig(file string) (conf *Config, err error) {
 	return
 }
 
-func (c *Config) parse() (m map[string]string, err error) {
+func (c *ConfigReload) parse() (m map[string]string, err error) {
 	m = make(map[string]string, 1024)
 
 	f, err := os.Open(c.filename)
@@ -136,7 +143,7 @@ func lineParse(lineNo *int, line *string, m *map[string]string) {
 
 }
 
-func (c *Config) GetValue(key string) (value string, ok bool) {
+func (c *ConfigReload) GetValue(key string) (value string, ok bool) {
 	c.rwLock.Lock()
 	defer c.rwLock.Unlock()
 
@@ -144,7 +151,7 @@ func (c *Config) GetValue(key string) (value string, ok bool) {
 	return
 }
 
-func (c *Config) GetString(key string) (value string, err error) {
+func (c *ConfigReload) GetString(key string) (value string, err error) {
 	value, ok := c.GetValue(key)
 	if !ok {
 		err = fmt.Errorf("key [%s] not found", key)
@@ -152,20 +159,20 @@ func (c *Config) GetString(key string) (value string, err error) {
 	return
 }
 
-func (c *Config) GetInt(key string) (value int, err error) {
+func (c *ConfigReload) GetInt(key string) (value int, err error) {
 	return
 }
 
-func (c *Config) GetIntDefault(key string, defaultValue int) (value int, err error) {
+func (c *ConfigReload) GetIntDefault(key string, defaultValue int) (value int, err error) {
 	return
 }
 
-func (c *Config) GetStringDefault(key, defaultValue string) (value string, err error) {
+func (c *ConfigReload) GetStringDefault(key, defaultValue string) (value string, err error) {
 	return
 }
 
-func (c *Config) reload() {
-	log.Printf("Config reload...\n")
+func (c *ConfigReload) reload() {
+	log.Printf("ConfigReload reload...\n")
 	ticker := time.NewTicker(time.Second * 1)
 
 	for _ = range ticker.C {
@@ -203,11 +210,11 @@ func (c *Config) reload() {
 	}
 }
 
-func (c *Config) AddObserver(n Notifyer) {
+func (c *ConfigReload) AddObserver(n Notifyer) {
 	c.notifyList = append(c.notifyList, n)
 }
 
-func (a *AppConfMgr) CallBack(c *Config) {
+func (a *AppConfMgr) CallBack(c *ConfigReload) {
 	appConf := &AppConf{}
 
 	hostAddr, err := c.GetString("hostaddr")
