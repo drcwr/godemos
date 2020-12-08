@@ -130,3 +130,17 @@ LOOP:
 	}
 
 }
+
+func define() {
+	make(chan int)
+	make(chan int, 10)
+	make(chan<- int)
+	make(<-chan int)
+	make(chan string)
+	make(chan bool, 2)
+	make(<-chan bool)
+	make(chan<- bool)
+	make(<-chan float32)
+	make(chan<- float64, 64)
+
+}
