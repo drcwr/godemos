@@ -13,14 +13,15 @@ type T struct {
 type TList []T
 
 func main() {
-	var ts = TList{{"n1", "2019-10-10T13:33:32+08:00"}, {"n2", "2019-10-10T14:33:32+08:00"}, {"n3", "2019-10-10T13:34:32+08:00"}, {"n4", "2019-11-10T13:33:32+08:00"}}
+	var ts = TList{{"n1", "3019-10-10T13:33:32+08:00"}, {"n2", "2019-10-10T14:33:32+08:00"}, {"n3", "4019-10-10T13:34:32+08:00"}, {"n4", "2019-11-10T13:33:32+08:00"}}
 	t := ts[2]
 	t.tim = t.tim[2:]
 	ts = append(ts, t)
 	log.Println("00000h,", ts)
 
 	// Tsort(ts)
-	sort.Sort(ts)
+	// sort.Sort(ts)
+	sort.Slice(ts, ts.Less)
 
 	log.Println("switch,", ts)
 }
@@ -60,3 +61,5 @@ func (l TList) Less(i, j int) bool {
 func (l TList) Swap(i, j int) {
 	l[i], l[j] = l[j], l[i]
 }
+
+// func Slice(slice interface{}, less func(i, j int) bool) {
