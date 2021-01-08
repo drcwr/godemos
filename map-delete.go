@@ -19,8 +19,8 @@ func main() {
 	log.Printf("maptest 1 %#v\n", maptest["del"])
 	cpu := maptest["dell"]
 	log.Printf("maptest 1 2 %#v\n", cpu)
-	str := (&cpu).String()
-	log.Printf("maptest 1 3 %#v\n", str)
+	// str := (&cpu).String()
+	// log.Printf("maptest 1 3 %#v\n", str)
 
 	ch, ok := maptest["del"]
 	if ok {
