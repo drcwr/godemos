@@ -15,6 +15,8 @@ func main() {
 	var maptestvar map[string]string
 	log.Printf("maptestvar %#v\n", maptestvar)
 	if maptestvar == nil {
+		// panic: assignment to entry in nil map
+
 		// maptestvar = make(map[string]string)
 		maptestvar = mapstr{}
 	}
