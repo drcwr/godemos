@@ -6,35 +6,39 @@ import (
 	"time"
 )
 
-func Printer(num int, chin, chout chan int, wg *sync.WaitGroup, tatolconunt *int) {
-	// count := 0
+func Printer(num int, count *int, wg *sync.WaitGroup, inch, outch chan int) {
+forlabel:
 	for {
 		select {
-		case <-chin:
-			fmt.Printf("Printer%d-%d\n", num, *tatolconunt)
-			*tatolconunt++
-			wg.Done()
-
-			if *tatolconunt > 100 {
-				break
+		case <-inch:
+			fmt.Printf("Printer%d-%d\n", num, *count)
+			*count++
+			if *count > 100 {
+				wg.Done()
+				break forlabel
 			}
-			chout <- 1
+			outch <- 1
 		}
 	}
 }
 
 func main() {
-	var tatolconunt = 1
-	var ch1 = make(chan int)
-	var ch2 = make(chan int)
-	var ch3 = make(chan int)
-	var wg sync.WaitGroup
-	wg.Add(100)
+	var (
+		ch1   = make(chan int)
+		ch2   = make(chan int)
+		ch3   = make(chan int)
+		wg    sync.WaitGroup
+		count = 1
+	)
 
-	go Printer(1, ch3, ch1, &wg, &tatolconunt)
-	go Printer(2, ch1, ch2, &wg, &tatolconunt)
-	go Printer(3, ch2, ch3, &wg, &tatolconunt)
+	wg.Add(1)
+
+	go Printer(1, &count, &wg, ch3, ch1)
+	go Printer(2, &count, &wg, ch1, ch2)
+	go Printer(3, &count, &wg, ch2, ch3)
+
 	ch3 <- 1
+
 	wg.Wait()
-	time.Sleep(time.Second * 5)
+	time.Sleep(time.Second * 2)
 }
