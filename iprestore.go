@@ -18,7 +18,7 @@ func main() {
 		}
 	}
 
-	var input = "12561211"
+	var input = "125610211"
 	var bytea = []byte(input)
 	var ipstr = [4][]byte{}
 	var i = len(input)
@@ -47,6 +47,10 @@ labeltotal:
 }
 
 func checkipnum(input []byte) bool {
+	if len(input) > 1 && input[0] == '0' {
+		fmt.Printf("CHECK FALSE,0 start,%s\n", string(input))
+		return false
+	}
 	numip, err := strconv.Atoi(string(input))
 	if err != nil {
 		fmt.Printf("CHECK FALSE,%s\n", err.Error())
