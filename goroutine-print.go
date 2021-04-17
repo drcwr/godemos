@@ -11,16 +11,16 @@ func Printer(ch chan int, wg *sync.WaitGroup) {
 	case num, ok := <-ch:
 		if ok {
 			fmt.Printf("Printer%d-%d\n", num%3+1, num+1)
+			wg.Done()
 			num++
 			ch <- num
-			wg.Done()
 		}
 	}
 }
 
 func main() {
 	var (
-		ch = make(chan int, 100)
+		ch = make(chan int)
 		wg = sync.WaitGroup{}
 	)
 	defer close(ch)

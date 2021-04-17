@@ -11,6 +11,8 @@ type TreeNode struct {
 func main() {
 	var root *TreeNode
 	root = &TreeNode{Data: 6, Left: &TreeNode{Data: 7, Left: &TreeNode{Data: 9, Left: nil, Right: nil}, Right: nil}, Right: &TreeNode{Data: 8, Left: nil, Right: nil}}
+	var T = &TreeNode{1, &TreeNode{2, &TreeNode{4, nil, nil}, nil}, &TreeNode{3, nil, &TreeNode{5, nil, nil}}}
+	root = T
 	res := RightView(root)
 	fmt.Printf("main res %v\n", res)
 }
@@ -43,6 +45,6 @@ func RightView(root *TreeNode) []int {
 
 	}
 	// res = append(res, []int{3, 4, 5}...)
-	fmt.Printf("rightview res %v\n", res)
+	fmt.Printf("RightView res %v\n", res)
 	return res
 }
