@@ -12,7 +12,7 @@ func main() {
 	var root *TreeNode
 	root = &TreeNode{Data: 6, Left: &TreeNode{Data: 7, Left: &TreeNode{Data: 9, Left: nil, Right: nil}, Right: nil}, Right: &TreeNode{Data: 8, Left: nil, Right: nil}}
 	res := RightView(root)
-	fmt.Printf("res %v\n", res)
+	fmt.Printf("main res %v\n", res)
 }
 
 func RightView(root *TreeNode) []int {
@@ -43,6 +43,6 @@ func RightView(root *TreeNode) []int {
 
 	}
 	// res = append(res, []int{3, 4, 5}...)
-	fmt.Printf("res %v\n", res)
+	fmt.Printf("rightview res %v\n", res)
 	return res
 }
