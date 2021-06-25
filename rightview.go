@@ -3,25 +3,24 @@ package main
 import "fmt"
 
 type TreeNode struct {
-	Data  int
+	Data  interface{}
 	Left  *TreeNode
 	Right *TreeNode
 }
 
 func main() {
-	var root *TreeNode
-	root = &TreeNode{Data: 6, Left: &TreeNode{Data: 7, Left: &TreeNode{Data: 9, Left: nil, Right: nil}, Right: nil}, Right: &TreeNode{Data: 8, Left: nil, Right: nil}}
-	var T = &TreeNode{1, &TreeNode{2, &TreeNode{4, nil, nil}, nil}, &TreeNode{3, nil, &TreeNode{5, nil, nil}}}
-	root = T
+	var root *TreeNode = &TreeNode{Data: 6, Left: &TreeNode{"str", nil, nil}}
 	res := RightView(root)
 	fmt.Printf("main res %v\n", res)
+
 }
 
-func RightView(root *TreeNode) []int {
-	var res = []int{}
+func RightView(root *TreeNode) []interface{} {
+	var res = []interface{}{}
 	if root == nil {
 		return res
 	}
+
 	res = append(res, root.Data)
 	nextLayer := []*TreeNode{root}
 	for len(nextLayer) > 0 {
@@ -34,7 +33,6 @@ func RightView(root *TreeNode) []int {
 			if v.Left != nil {
 				tmpLayer = append(tmpLayer, v.Left)
 			}
-
 		}
 		if len(tmpLayer) > 0 {
 			nextLayer = tmpLayer
@@ -42,9 +40,9 @@ func RightView(root *TreeNode) []int {
 		} else {
 			break
 		}
-
 	}
-	// res = append(res, []int{3, 4, 5}...)
+
 	fmt.Printf("RightView res %v\n", res)
 	return res
+
 }
