@@ -3,7 +3,6 @@ package main
 
 import (
 	"log"
-	"time"
 	"unsafe"
 )
 
@@ -80,15 +79,12 @@ type cb struct {
 func main() {
 	log.Println("main")
 
-	ch := make(chan LogEventStruct, 100000)
+	ch := make(chan LogEventStruct, 100)
+
 	log.Printf("ch size=%d\n", unsafe.Sizeof(ch))
 
 	ev := LogEventStruct{}
+
 	log.Printf("ev size=%d\n", unsafe.Sizeof(ev))
-
-	eva := [500000]LogEventStruct{{UserId: "1234567890123456789012345678901234567890123456789012345678901234567890"}}
-	log.Printf("ev size=%d\n", unsafe.Sizeof(eva))
-
-	time.Sleep(5 * time.Second)
 
 }

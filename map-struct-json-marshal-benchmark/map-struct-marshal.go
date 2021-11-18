@@ -35,7 +35,7 @@ func Runstruct() int64 {
 
 func Runmap() int64 {
 
-	strstr := map[string]interface{}{"rType": 0, "rNum": nil, "rCer": "imageimage"}
+	strstr := map[string]string{"rType": "0", "rNum": "nil", "rCer": "imageimage"}
 
 	start2 := time.Now()
 	for i := 0; i < loop; i++ {

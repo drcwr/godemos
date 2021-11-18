@@ -16,15 +16,28 @@ type CompanyTrademark struct {
 	Image string `json:"image" form:"image"`
 }
 
+type CompanyTrademark2 struct {
+	CompanyTrademark
+	RType int64  `json:"rType" form:"rType"`
+	No    string `json:"no" form:"no"`
+	Image string `json:"image" form:"image"`
+}
+
 func main() {
 	a := "啊啊啊"
-	var ctm0 CompanyTrademark
+	var ctm0 CompanyTrademark2
+	ctm0.CompanyTrademark.RType = 10
+	ctm0.CompanyTrademark.No = "haha0"
+	ctm0.CompanyTrademark.Image = "imageimage0"
 	ctm0.RType = 1
-	ctm0.No = "haha"
-	ctm0.Image = "imageimage"
-	var ctm CompanyTrademark
+	// ctm0.No = "haha1"
+	ctm0.Image = "imageimage1"
+	var ctm CompanyTrademark2
 	var data []byte
 	var err error
+
+	fmt.Printf("ctm0 %v", ctm0)
+	fmt.Printf("ctm0.CompanyTrademark %v", ctm0.CompanyTrademark)
 
 	fmt.Println("aaa len", len(a))
 	start := time.Now()
@@ -42,6 +55,8 @@ func main() {
 		fmt.Println("errMsg", errMsg)
 	}
 	fmt.Println("ctm", ctm)
+	fmt.Printf("ctm %v", ctm)
+	fmt.Printf("ctm.CompanyTrademark %v", ctm.CompanyTrademark)
 
 	err = json.Unmarshal([]byte("{\"kk\":\"vv\"}"), &ctm)
 	if err != nil {
